@@ -30,7 +30,7 @@
           </div>
           <div class="icon">
           </div>
-          <a href="{{route('posts.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="{{route('post.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       
       </div><!-- /.container-fluid -->

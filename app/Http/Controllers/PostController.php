@@ -74,7 +74,7 @@ class PostController extends Controller
             ]);
         }
 
-        return redirect()->route('posts.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
+        return redirect()->route('post.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
     }
 
     /**

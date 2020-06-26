@@ -28,6 +28,7 @@
              <!-- Add icons to the links using the .nav-icon class
                   with font-awesome or any other icon font library -->
              <li class="nav-item ">
+
              <a href="{{route('dashboard.index')}}" class="nav-link active">
                  <i class="nav-icon fas fa-tachometer-alt"></i>
                  <p>
@@ -37,10 +38,18 @@
            
              </li>
              <li class="nav-item">
-               <a href="{{route('posts.index')}}" class="nav-link">
+               <a href="{{route('post.index')}}" class="nav-link">
                  <i class="nav-icon fas fa-th"></i>
                  <p>
                    Posts
+                 </p>
+               </a>
+             </li>
+             <li class="nav-item">
+               <a href="{{route('tag.index')}}" class="nav-link">
+                 <i class="nav-icon fas fa-tag"></i>
+                 <p>
+                   Tags
                  </p>
                </a>
              </li>

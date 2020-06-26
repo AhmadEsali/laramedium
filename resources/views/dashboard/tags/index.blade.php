@@ -10,12 +10,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Posts</h1>
+            <h1>Tags</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Posts</li>
+              <li class="breadcrumb-item active">Tags</li>
             </ol>
           </div>
         </div>
@@ -30,9 +30,17 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">            
-                  <a href="{{route('post.create')}}" class="btn btn-info btn-lg">
-                    <span class="fa fa-plus"></span> 
-                  </a>
+                  Add new tag
+                  
+                  <form method="post" class="mt-4">
+                      @csrf
+                    <div class="input-group input-group-sm">
+                        <input type="text" name="name" class="form-control">
+                        <span class="input-group-append">
+                          <button type="submit" class="btn btn-info btn-flat">Add</button>
+                        </span>
+                      </div>
+                  </form>
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -40,32 +48,24 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>title</th>
-                    <th>tags</th>
+                    <th>name</th>
                     <th>Created At</th>
                     <th>actions</th>
                    
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach ($posts as $post)
+                    @foreach ($tags as $tag)
                     <tr>
-                        <td>{{$post->title}}</td>
-                        <td>
-                          @foreach ($post->tags as $tag)
-                            #{{$tag->name}}
-                          @endforeach
-                       </td>
-                        <td>{{$post->created_at->diffForHumans()}}</td>
+                        <td>{{$tag->name}}</td>
+                       
+                        <td>{{$tag->created_at->diffForHumans()}}</td>
                         <td>
                             <ul class="list-inline m-0">
-                               
-                                <li class="list-inline-item">
-                                    <button class="btn btn-success btn-sm rounded-0" type="submit"  title="Edit"><i class="fa fa-edit"></i></button>
-                                </li>
+                      
                                 <li class="list-inline-item">
 
-                                <form action={{route('post.destroy',$post->slug)}} method="post">
+                                <form action={{route('tag.destroy',$tag)}} method="post">
                                   @csrf
                                   @method('DELETE')
                                         <button class="btn btn-danger btn-sm rounded-0" type="submit"  title="Delete"><i class="fa fa-trash"></i></button>
