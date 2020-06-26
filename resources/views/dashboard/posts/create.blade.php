@@ -30,16 +30,23 @@
                       <textarea id="body" name="body" class="textarea" placeholder="Place some text here"
                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                  
                       </div>
+
+                    <div class="form-group">
+                      <label>Select Tags</label>
+                      <select name="tags[]" multiple="" class="custom-select">
+                        @foreach ($tags as $tag)
+                        <option value="{{$tag->id}}">{{$tag->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
                     <div class="form-group">
                       <label for="images">Upload photos</label>
                         <div class="custom-file"> 
-
                             <input type="file"  accept="image/*" multiple class="custom-file-input" name="images[]" id="images">
                             <label class="custom-file-label" for="images">Choose file</label>
                         </div>
-
                         <div id="output"></div>
-
                     </div>
                     
                   </div>
@@ -60,13 +67,8 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  </div>    <!-- Content Header (Page header) -->
-   
-    <!-- /.content-header -->
-
-    
+     
   </div>
-
 
 @endsection
 
@@ -92,7 +94,6 @@
        })
 
    })
-
 
 </script>
 @endpush

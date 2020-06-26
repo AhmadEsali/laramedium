@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostImage;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,8 @@ class PostController extends Controller
             ->with('post_images')
             ->orderBy('created_at', 'desc')
             ->get();
+
+
         return view('dashboard.posts.index', compact('posts'));
     }
 
@@ -39,7 +42,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('dashboard.posts.create');
+        $tags = Tag::all();
+
+        return view('dashboard.posts.create', compact('tags'));
     }
 
     /**
@@ -57,6 +62,9 @@ class PostController extends Controller
             'body'  => $request->body,
             'author_id' => $user->id
         ]);
+
+        $post->tags()->sync($request->tags);
+
 
         foreach ($images as $image) {
             $imagePath = Storage::disk('uploads')->put($user->email . '/posts/' . $post->id, $image);
@@ -111,7 +119,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->back()->with(['message' => 'deleting success', 'alert' => 'alert-success']);

@@ -41,6 +41,7 @@
                   <thead>
                   <tr>
                     <th>title</th>
+                    <th>tags</th>
                     <th>Created At</th>
                     <th>actions</th>
                    
@@ -50,6 +51,11 @@
                     @foreach ($posts as $post)
                     <tr>
                         <td>{{$post->title}}</td>
+                        <td>
+                          @foreach ($post->tags as $tag)
+                            #{{$tag->name}}
+                          @endforeach
+                       </td>
                         <td>{{$post->created_at->diffForHumans()}}</td>
                         <td>
                             <ul class="list-inline m-0">
