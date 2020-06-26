@@ -24,7 +24,7 @@
                                     <div class="form-group">
                                         <label for="title">Title</label>
                                         <input type="text" name="title" id="title" class="form-control"
-                                            id="exampleInputEmail1" placeholder="Enter Title">
+                                            id="exampleInputEmail1" placeholder="Enter Title"  value="{{ old('title')}}">
                                         @if($errors->has('title'))
                                             <span
                                                 class="text-danger">{{ $errors->first('title') }}</span>

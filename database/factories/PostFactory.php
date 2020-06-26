@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Post;
+use App\Models\PostImage;
 use App\Models\User;
 use Faker\Generator as Faker;
 
@@ -13,5 +14,10 @@ $factory->define(Post::class, function (Faker $faker) {
         'author_id' => function () {
             return User::inRandomOrder()->first()->id;
         }
+    ];
+});
+$factory->define(PostImage::class, function (Faker $faker) {
+    return [
+        'image_path' => '\uploads\default.jpg',
     ];
 });
