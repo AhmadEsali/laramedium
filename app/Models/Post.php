@@ -16,9 +16,15 @@ class Post extends Model
     }
 
 
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::of($value)->slug('-');
+    }
+
+    public function post_images()
+    {
+        return $this->hasMany(PostImage::class);
     }
 }
