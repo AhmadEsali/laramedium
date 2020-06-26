@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\PostImage;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\TryCatch;
 
 class PostController extends Controller
 {
@@ -53,28 +55,31 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $user = Auth::user();
-        $images = $request->images;
-        $post = Post::create([
-            'title' => $request->title,
-            'body'  => $request->body,
-            'author_id' => $user->id
-        ]);
-
-        $post->tags()->sync($request->tags);
-
-
-        foreach ($images as $image) {
-            $imagePath = Storage::disk('uploads')->put($user->email . '/posts/' . $post->id, $image);
-            PostImage::create([
-                'image_path' => '/uploads/' . $imagePath,
-                'post_id' => $post->id
+        try {
+            $user = Auth::user();
+            $images = $request->images;
+            $post = Post::create([
+                'title' => $request->title,
+                'body'  => $request->body,
+                'author_id' => $user->id
             ]);
-        }
 
-        return redirect()->route('post.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
+            $post->tags()->sync($request->tags);
+
+            foreach ($images as $image) {
+                $imagePath = Storage::disk('uploads')->put($user->email . '/posts/' . $post->id, $image);
+                PostImage::create([
+                    'image_path' => '/uploads/' . $imagePath,
+                    'post_id' => $post->id
+                ]);
+            }
+
+            return redirect()->route('post.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     /**
