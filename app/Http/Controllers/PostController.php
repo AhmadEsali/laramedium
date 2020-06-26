@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
+
+        $posts = Post::where('author_id', auth()->user()->id)->get();
+        return view('dashboard.posts.index', compact('posts'));
     }
 
     /**
@@ -80,6 +90,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+
+        $post->delete();
+
+        return redirect()->back()->with(['message' => 'deleting success', 'alert' => 'alert-success']);;
     }
 }
