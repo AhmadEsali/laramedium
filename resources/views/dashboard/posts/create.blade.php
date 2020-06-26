@@ -31,7 +31,9 @@
                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>                  
                       </div>
                     <div class="form-group">
+                      <label for="images">Upload photos</label>
                         <div class="custom-file"> 
+
                             <input type="file"  accept="image/*" multiple class="custom-file-input" name="images[]" id="images">
                             <label class="custom-file-label" for="images">Choose file</label>
                         </div>

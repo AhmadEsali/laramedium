@@ -66,7 +66,7 @@ class PostController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->route('posts.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
     }
 
     /**
@@ -114,6 +114,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->back()->with(['message' => 'deleting success', 'alert' => 'alert-success']);;
+        return redirect()->back()->with(['message' => 'deleting success', 'alert' => 'alert-success']);
     }
 }
