@@ -63,8 +63,8 @@
                                                 <ul class="list-inline m-0">
 
                                                     <li class="list-inline-item">
-                                                        <button class="btn btn-success btn-sm rounded-0" type="submit"
-                                                            title="Edit"><i class="fa fa-edit"></i></button>
+                                                        <a href="{{route('post.edit',$post->slug)}}" class="btn btn-success btn-sm rounded-0" type="submit"
+                                                            title="Edit"><span class="fa fa-edit"></span></a>
                                                     </li>
                                                     <li class="list-inline-item">
 

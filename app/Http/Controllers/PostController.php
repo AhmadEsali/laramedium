@@ -6,10 +6,9 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\PostImage;
 use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\Node\Stmt\TryCatch;
+use File;
 
 class PostController extends Controller
 {
@@ -57,29 +56,35 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        try {
-            $user = Auth::user();
-            $images = $request->images;
-            $post = Post::create([
-                'title' => $request->title,
-                'body'  => $request->body,
-                'author_id' => $user->id
-            ]);
 
-            $post->tags()->sync($request->tags);
+        $user = Auth::user();
 
+
+        $post = Post::create([
+            'title' => $request->title,
+            'body'  => $request->body,
+            'author_id' => $user->id
+        ]);
+
+        $post->tags()->sync($request->tags);
+
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
             foreach ($images as $image) {
-                $imagePath = Storage::disk('uploads')->put($user->email . '/posts/' . $post->id, $image);
+                $name = $image->getClientOriginalName();
+                $image->move(public_path() . '/uploads/', $name);
+                // $imagePath = Storage::disk('uploads')->put($user->email . '\posts\\' . $post->id . '\\', $image);
                 PostImage::create([
-                    'image_path' => '/uploads/' . $imagePath,
+                    'name' =>   $name,
                     'post_id' => $post->id
                 ]);
             }
-
-            return redirect()->route('post.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
-        } catch (\Throwable $th) {
-            //throw $th;
         }
+
+
+
+
+        return redirect()->route('post.index')->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
     }
 
     /**
@@ -101,7 +106,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $tags = Tag::all();
+
+        return view('dashboard.posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -111,9 +118,37 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+
+
+
+        $user = Auth::user();
+        foreach ($post->post_images as $image) {
+            Storage::delete('uploads/' . $image->name);
+        }
+
+
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $name = $image->getClientOriginalName();
+                $image->move(public_path() . '/uploads/', $name);
+                PostImage::where('post_id', $post->id)->update([
+                    'name' =>   $name,
+                ]);
+            }
+        }
+
+        $post->update([
+            'title' => $request->title,
+            'body'  => $request->body,
+        ]);
+
+        $post->tags()->sync($request->tags);
+
+        return redirect()->route('post.index')->with(['message' => 'update post successfully', 'alert' => 'alert-success']);
     }
 
     /**
@@ -124,6 +159,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        foreach ($post->post_images as $image) {
+            Storage::delete('uploads/' . $image->name);
+        }
+
         $post->tags()->detach();
         $post->delete();
 

@@ -18,6 +18,6 @@ $factory->define(Post::class, function (Faker $faker) {
 });
 $factory->define(PostImage::class, function (Faker $faker) {
     return [
-        'image_path' => '\uploads\default.jpg',
+        'name' => 'default.jpg',
     ];
 });

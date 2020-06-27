@@ -5,6 +5,7 @@ use App\Models\PostImage;
 use App\Models\User;
 use App\Models\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,8 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(Tag::class, 5)->create();
-
+        // factory(Tag::class, 5)->create();
+        DB::table('tags')->insert([
+            ['name' => 'sport'],
+            ['name' => 'news'],
+            ['name' => 'tech'],
+            ['name' => 'commerce'],
+            ['name' => 'style'],
+        ]);
 
         factory(User::class, 10)->create()->each(function ($user) {
 

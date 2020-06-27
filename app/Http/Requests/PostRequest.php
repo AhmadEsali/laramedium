@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
+use Illuminate\Http\Request;
+
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class PostRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,6 +17,10 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
+        if (request()->isMethod('PUT')) {
+            return auth()->user()->id == request()->author_id;
+        }
+
         return true;
     }
 
