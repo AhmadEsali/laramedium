@@ -1,4 +1,4 @@
-# Monastium - Webapp
+# Lara Medium
 
 ## Steps
 
