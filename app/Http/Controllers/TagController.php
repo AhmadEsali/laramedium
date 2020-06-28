@@ -37,42 +37,9 @@ class TagController extends Controller
         Tag::create($validatedData);
 
 
-        return redirect()->back()->with(['message' => 'add post successfully', 'alert' => 'alert-success']);
+        return redirect()->back()->with(['message' => 'add tag successfully', 'alert' => 'alert-success']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tag $tag 
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
