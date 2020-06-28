@@ -1,8 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="{{ asset('assets/admin') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="{{ route('dashboard.index') }}" class="brand-link">
+
         <span class="brand-text font-weight-light">Lara Medium</span>
     </a>
 
@@ -18,7 +17,7 @@
                 <a href="#" class="d-block">
                     @if(Auth::user())
                         {{ Auth::user()->name }}
-                   @endif
+                    @endif
                 </a>
             </div>
         </div>
@@ -54,6 +53,17 @@
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
                             Tags
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/" >
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+
+                        <p>
+
+                            Go to site
                         </p>
                     </a>
                 </li>
