@@ -32,7 +32,7 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:50|unique:posts,title',
+            'title' => 'required|string|max:50|unique:posts,title,' . request()->post_id,
             'body' => 'required|string|max:500',
             'images' => 'required',
             'images.*' => 'image|mimes:jpeg,png,jpg,svg',
