@@ -10,7 +10,7 @@ use Faker\Generator as Faker;
 $factory->define(Post::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(3),
-        'body' => $faker->realText(rand(80, 600)),
+        'body' => $faker->realText(rand(200, 600)),
         'author_id' => function () {
             return User::inRandomOrder()->first()->id;
         }

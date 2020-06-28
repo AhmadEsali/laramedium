@@ -33,6 +33,8 @@ class FrontendController extends Controller
     {
         return view('frontend.post', compact('post'));
     }
+
+
     public function showTag(Tag $tag)
     {
         return view('frontend.tag', compact('tag'));
